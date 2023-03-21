@@ -1,0 +1,8 @@
+server:
+  port: 28080
+  servlet:
+    context-path: /agency-api
+
+spring:
+  jackson:
+    property-naming-strategy: SNAKE_CASE
