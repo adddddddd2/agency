@@ -1,0 +1,35 @@
+version: '3'
+services:
+  postgres:
+    container_name: abc
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: adel
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: agency
+    ports:
+      - "5432:5432"
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "someemail@emailasidofjasodif.com"
+      PGADMIN_DEFAULT_PASSWORD: 123
+    depends_on:
+      - postgres
+    ports:
+      - "28081:80"
+  app:
+    build:
+      context: .
+    container_name: app
+    ports:
+      - "28080:28080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/agency
+      - SPRING_DATASOURCE_USERNAME=adel
+      - SPRING_DATASOURCE_PASSWORD=123
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - postgres
